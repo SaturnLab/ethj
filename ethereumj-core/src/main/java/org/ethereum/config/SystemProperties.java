@@ -972,4 +972,37 @@ public class SystemProperties {
         return config.hasPath("GitHubTests.testPath") &&
                 !config.getString("GitHubTests.testPath").isEmpty();
     }
+
+    public int getBlockProduceIntervalMillisecs(){
+        return config.getInt("dpos.block.produce.interval");
+    }
+
+
+    public List<String[]> getAllBlockProduceCandidates() {
+        List<String> list=config.getStringList("dpos.accounts");
+        List<String[]> ret=new ArrayList<String[]>();
+        for(String s:list){
+            String[] arr=s.split(":");
+            ret.add(arr);
+        }
+        return ret;
+    }
+
+    public int candidateIndexOfMe(){
+        return config.getInt("dpos.candidate.me.index");
+    }
+
+    public int candidateCnt(){
+        return config.getInt("dpos.candidate.cnt");
+    }
+    public List<String[]> allCandidateHosts(){
+        List<String> list=config.getStringList("dpos.hosts");
+        List<String[]> ret=new ArrayList<>();
+        for(String host:list){
+            String[] arr= host.split(":");
+            ret.add(arr);
+        }
+        return ret;
+    }
+
 }

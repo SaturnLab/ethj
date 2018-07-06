@@ -31,6 +31,7 @@ import java.util.Set;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GitHubBlockStateTest {
+    /*
 
     static String commitSHA = "7f638829311dfc1d341c1db85d8a891f57fa4da7";
     static String treeSHA = "9b96943196bfbb8b49651eab5e479956d7dabcc7"; // https://github.com/ethereum/tests/tree/develop/BlockchainTests/GeneralStateTests/
@@ -300,4 +301,5 @@ public class GitHubBlockStateTest {
     public void stCodeCopyTest() throws IOException {
         suite.runAll("stCodeCopyTest");
     }
+    */
 }

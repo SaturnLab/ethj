@@ -160,9 +160,9 @@ public class BasicSample implements Runnable {
 
             waitForFirstBlock();
 
-            waitForSync();
+  //         waitForSync();
 
-            onSyncDone();
+ //          onSyncDone();
 
         } catch (Exception e) {
             logger.error("Error occurred in Sample: ", e);
@@ -223,10 +223,13 @@ public class BasicSample implements Runnable {
                 return;
             }
 
-            if (cnt >= 30) logger.info("No Eth nodes found so far. Keep searching...");
+            if (cnt >= 10) {
+                logger.info("No Eth nodes found so far. Keep searching...");
+                return;
+            }
             if (cnt > 60) {
                 logger.error("No eth capable nodes found. Logs need to be investigated.");
-//                throw new RuntimeException("Eth nodes failed.");
+                throw new RuntimeException("Eth nodes failed.");
             }
             cnt++;
         }
@@ -249,7 +252,10 @@ public class BasicSample implements Runnable {
                 return;
             }
 
-            if (cnt >= 30) logger.info("No sync peers found so far. Keep searching...");
+            if (cnt >= 10) {
+                logger.info("No sync peers found so far. Keep searching...");
+                return;
+            }
             if (cnt > 60) {
                 logger.error("No sync peers found. Logs need to be investigated.");
 //                throw new RuntimeException("Sync peers failed.");
@@ -276,7 +282,10 @@ public class BasicSample implements Runnable {
                 return;
             }
 
-            if (cnt >= 300) logger.info("Still no blocks. Be patient...");
+            if (cnt >= 15) {
+                logger.info("Still no blocks. Be patient...");
+                return ;
+            }
             if (cnt > 330) {
                 logger.error("No blocks imported during a long period. Must be a problem, logs need to be investigated.");
 //                throw new RuntimeException("Block import failed.");
@@ -294,15 +303,19 @@ public class BasicSample implements Runnable {
     private void waitForSync() throws Exception {
         logger.info("Waiting for the whole blockchain sync (will take up to several hours for the whole chain)...");
         while(true) {
-            Thread.sleep(10000);
+            Thread.sleep(3000);
 
             if (synced) {
-                logger.info("[v] Sync complete! The best block: " + bestBlock.getShortDescr());
+                //logger.info("[v] Sync complete! The best block: " +bestBlock==null?"bestBlock==null": bestBlock.getShortDescr() );
+                System.err.println("[v] Sync complete! The best block: "
+                    +(bestBlock==null?"bestBlock==null": bestBlock.getShortDescr()) );
                 syncComplete = true;
                 return;
             }
 
-            logger.info("Blockchain sync in progress. Last imported block: " + bestBlock.getShortDescr() +
+            logger.info("Blockchain sync in progress. Last imported block: "
+               +( bestBlock==null?"bestBlock==null":bestBlock.getShortDescr() )
+                +
                     " (Total: txs: " + txCount + ", gas: " + (gasSpent / 1000) + "k)");
             txCount = 0;
             gasSpent = 0;

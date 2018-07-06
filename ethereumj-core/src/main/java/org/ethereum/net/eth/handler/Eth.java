@@ -19,6 +19,7 @@ package org.ethereum.net.eth.handler;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import org.ethereum.core.*;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.net.eth.EthVersion;
 import org.ethereum.net.eth.message.EthMessageCodes;
 import org.ethereum.sync.PeerState;
@@ -99,6 +100,7 @@ public interface Eth {
      */
     void sendTransaction(List<Transaction> tx);
 
+    void sendCandidateMsg(CandidateMsg candidateMsg);
     /**
      *  Send GET_BLOCK_HEADERS message to the peer
      */

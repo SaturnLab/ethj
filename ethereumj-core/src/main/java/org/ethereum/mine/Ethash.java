@@ -171,6 +171,8 @@ public class Ethash {
     }
 
     public synchronized int[] getFullDataset() {
+        return null;
+        /*
         if (fullData == null) {
             fireDatatasetStatusUpdate(DATASET_PREPARE);
             File file = new File(config.ethashDir(), "mine-dag.dat");
@@ -213,7 +215,7 @@ public class Ethash {
             }
             fireDatatasetStatusUpdate(DATASET_READY);
         }
-        return fullData;
+        return fullData;    */
     }
 
     private long getFullSize() {

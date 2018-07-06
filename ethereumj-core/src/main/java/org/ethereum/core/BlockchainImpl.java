@@ -19,7 +19,9 @@ package org.ethereum.core;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.ethereum.config.BlockchainConfig;
+import org.ethereum.config.BlockchainNetConfig;
 import org.ethereum.config.CommonConfig;
+import org.ethereum.config.Constants;
 import org.ethereum.config.SystemProperties;
 import org.ethereum.crypto.HashUtil;
 import org.ethereum.datasource.inmem.HashMapDB;
@@ -158,7 +160,7 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
     @Autowired
     DbFlushManager dbFlushManager;
 
-    SystemProperties config = SystemProperties.getDefault();
+    public SystemProperties config = SystemProperties.getDefault();
 
     private List<Chain> altChains = new ArrayList<>();
     private List<Block> garbage = new ArrayList<>();
@@ -459,7 +461,8 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
             listener.trace(String.format("Block chain size: [ %d ]", this.getSize()));
 
             if (ret == IMPORTED_BEST) {
-                eventDispatchThread.invokeLater(() -> pendingState.processBest(block, summary.getReceipts()));
+           //    eventDispatchThread.invokeLater(() -> pendingState.processBest(block, summary.getReceipts()));
+                pendingState.processBest(block, summary.getReceipts());
             }
         }
 
@@ -936,8 +939,14 @@ public class BlockchainImpl implements Blockchain, org.ethereum.facade.Blockchai
 
         Map<byte[], BigInteger> rewards = new HashMap<>();
 
-        BigInteger blockReward = config.getBlockchainConfig().getConfigForBlock(block.getNumber()).getConstants().getBLOCK_REWARD();
-        BigInteger inclusionReward = blockReward.divide(BigInteger.valueOf(32));
+      //  BigInteger blockReward = config.getBlockchainConfig().getConfigForBlock(block.getNumber()).getConstants().getBLOCK_REWARD();
+        BlockchainNetConfig nconfig= config.getBlockchainConfig();
+        BlockchainConfig c=nconfig.getConfigForBlock(block.getNumber());
+        Constants constants=c.getConstants();
+        BigInteger blockReward =constants.getBLOCK_REWARD();
+        BigInteger v32=BigInteger.valueOf(32);
+        BigInteger inclusionReward = blockReward.divide(v32);
+      //  BigInteger inclusionReward = blockReward.divide(BigInteger.valueOf(32));
 
         // Add extra rewards based on number of uncles
         if (block.getUncleList().size() > 0) {

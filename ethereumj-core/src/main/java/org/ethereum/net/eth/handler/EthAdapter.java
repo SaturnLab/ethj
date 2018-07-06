@@ -19,6 +19,7 @@ package org.ethereum.net.eth.handler;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import org.ethereum.core.*;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.net.eth.EthVersion;
 import org.ethereum.sync.SyncStatistics;
 
@@ -93,6 +94,9 @@ public class EthAdapter implements Eth {
     public void sendTransaction(List<Transaction> tx) {
     }
 
+    @Override
+    public void sendCandidateMsg(CandidateMsg candidateMsg) {
+    }
     @Override
     public ListenableFuture<List<BlockHeader>> sendGetBlockHeaders(long blockNumber, int maxBlocksAsk, boolean reverse) {
         return null;

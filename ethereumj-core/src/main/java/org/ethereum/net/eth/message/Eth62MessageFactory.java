@@ -17,6 +17,7 @@
  */
 package org.ethereum.net.eth.message;
 
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.net.message.Message;
 import org.ethereum.net.message.MessageFactory;
 
@@ -49,6 +50,8 @@ public class Eth62MessageFactory implements MessageFactory {
                 return new BlockBodiesMessage(encoded);
             case NEW_BLOCK:
                 return new NewBlockMessage(encoded);
+            case CANDIDATE_MSG:
+                return new CandidateMsg(encoded);
             default:
                 throw new IllegalArgumentException("No such message");
         }

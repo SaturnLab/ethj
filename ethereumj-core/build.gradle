@@ -94,11 +94,11 @@ test {
 
     jvmArgs = ["-Xss8m", "-Xmx3G"]
 
-    prepareGithubTests()
+  //  prepareGithubTests()
     // If Github tests directory is provided, it's passed to test runner
-    if (System.getProperty("GitHubTests.testPath") != null) {
-        jvmArgs.add('-DGitHubTests.testPath' + '=' + System.getProperty("GitHubTests.testPath"))
-    }
+  //  if (System.getProperty("GitHubTests.testPath") != null) {
+  //      jvmArgs.add('-DGitHubTests.testPath' + '=' + System.getProperty("GitHubTests.testPath"))
+  //  }
 
     testLogging {
         events "failed"
@@ -401,6 +401,7 @@ def gitCurBranch() {
  * Repo with tests is changed often and EthereumJ is guaranteed
  * to pass only tests from specific commit.
  */
+ /*
 import org.ajoberstar.grgit.Grgit
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
@@ -438,3 +439,4 @@ def prepareGithubTests() {
         }
     }
 }
+*/

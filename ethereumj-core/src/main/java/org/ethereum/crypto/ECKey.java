@@ -32,6 +32,7 @@ package org.ethereum.crypto;
  * limitations under the License.
  */
 
+import java.util.LinkedHashMap;
 import org.ethereum.config.Constants;
 import org.ethereum.crypto.jce.ECKeyAgreement;
 import org.ethereum.crypto.jce.ECKeyFactory;
@@ -1213,5 +1214,57 @@ public class ECKey implements Serializable {
     private static void check(boolean test, String message) {
         if (!test) throw new IllegalArgumentException(message);
     }
+
+
+    public static void main(String[] args) throws Exception
+    {
+        LinkedHashMap<String,String> map=new LinkedHashMap<>();
+        int[] mark=new int[16];
+        while(true){
+            ECKey key=new ECKey();
+            String nodeId=Hex.toHexString(key.getNodeId());
+             String priv=Hex.toHexString(key.getPrivKeyBytes());
+            String address=Hex.toHexString(key.getAddress());
+            char c=address.charAt(0);
+            if(c == nodeId.charAt(0)) {
+                if (c - '0' >= 0 && c - '0' <= 9){
+                    mark[c-'0']=1;
+
+                } else if(c=='a') {
+                    mark[10]=1;
+                }
+                else if(c=='b') {
+                    mark[11]=1;
+                }
+                else if(c=='c') {
+                    mark[12]=1;
+                }
+                else if(c=='d') {
+                    mark[13]=1;
+                }
+                else if(c=='e') {
+                    mark[14]=1;
+                }
+                else if(c=='f') {
+                    mark[15]=1;
+                }
+
+                 System.out.println(priv+":"+address+"---"+nodeId);
+                map.put(priv+":"+address,nodeId);
+
+            }
+            boolean all=true;
+            for(int k=0;k<mark.length;k++){
+                if(mark[k]==0)
+                    all=false;
+            }
+            if(all)
+            break;
+        }
+        System.out.println("Map:"+map);
+
+    }
+
+
 
 }

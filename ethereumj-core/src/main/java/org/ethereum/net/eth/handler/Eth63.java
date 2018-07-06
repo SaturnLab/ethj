@@ -25,6 +25,7 @@ import org.ethereum.config.SystemProperties;
 import org.ethereum.core.*;
 import org.ethereum.datasource.Source;
 import org.ethereum.db.BlockStore;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.listener.CompositeEthereumListener;
 import org.ethereum.net.eth.EthVersion;
 import org.ethereum.net.eth.message.EthMessage;

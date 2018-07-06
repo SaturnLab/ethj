@@ -26,6 +26,7 @@ import org.ethereum.core.Block;
 import org.ethereum.core.BlockHeaderWrapper;
 import org.ethereum.core.Transaction;
 import org.ethereum.db.ByteArrayWrapper;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.net.MessageQueue;
 import org.ethereum.net.client.Capability;
 import org.ethereum.net.eth.handler.Eth;
@@ -383,6 +384,10 @@ public class Channel {
      */
     public void sendTransactions(List<Transaction> txs) {
         eth.sendTransaction(txs);
+    }
+
+    public void sendCandidateMsg(CandidateMsg candidateMsg){
+       eth.sendCandidateMsg(candidateMsg);
     }
 
     /**

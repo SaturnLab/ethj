@@ -331,7 +331,7 @@ public class SyncManager extends BlockDownloader {
         }
     }
 
-    private synchronized void makeSyncDone() {
+    public synchronized void makeSyncDone() {
         if (syncDone) return;
         syncDone = true;
         channelManager.onSyncDone(true);

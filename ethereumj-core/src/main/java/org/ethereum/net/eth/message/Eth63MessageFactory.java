@@ -17,6 +17,7 @@
  */
 package org.ethereum.net.eth.message;
 
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.net.message.Message;
 import org.ethereum.net.message.MessageFactory;
 
@@ -56,6 +57,8 @@ public class Eth63MessageFactory implements MessageFactory {
                 return new GetReceiptsMessage(encoded);
             case RECEIPTS:
                 return new ReceiptsMessage(encoded);
+            case CANDIDATE_MSG:
+                return new CandidateMsg(encoded);
             default:
                 throw new IllegalArgumentException("No such message");
         }

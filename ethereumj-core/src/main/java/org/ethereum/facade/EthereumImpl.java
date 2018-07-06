@@ -118,6 +118,10 @@ public class EthereumImpl implements Ethereum, SmartLifecycle {
         gLogger.info("EthereumJ node started: enode://" + toHexString(config.nodeId()) + "@" + config.externalIp() + ":" + config.listenPort());
     }
 
+    public SystemProperties getConfig(){
+        return config;
+    }
+
     @Override
     public void startPeerDiscovery() {
         worldManager.startPeerDiscovery();
@@ -156,6 +160,11 @@ public class EthereumImpl implements Ethereum, SmartLifecycle {
         }
         return importResult;
     }
+    public ImportResult receiveNewMinedBlockFromOtherCandidate(Block block) {
+        ImportResult importResult = worldManager.getBlockchain().tryToConnect(block);
+        System.err.println(importResult);
+        return importResult;
+    }
 
     @Override
     public BlockMiner getBlockMiner() {
@@ -176,6 +185,10 @@ public class EthereumImpl implements Ethereum, SmartLifecycle {
     @Override
     public SyncStatus getSyncStatus() {
         return syncManager.getSyncStatus();
+    }
+
+    public SyncManager getSyncManager() {
+        return syncManager ;
     }
 
     @Override
@@ -329,6 +342,10 @@ public class EthereumImpl implements Ethereum, SmartLifecycle {
     @Override
     public org.ethereum.facade.Repository getPendingState() {
         return worldManager.getPendingState().getRepository();
+    }
+
+    public PendingState getPendingStateImpl(){
+        return pendingState;
     }
 
     @Override

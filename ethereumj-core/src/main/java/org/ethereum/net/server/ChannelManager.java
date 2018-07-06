@@ -25,6 +25,7 @@ import org.ethereum.core.BlockWrapper;
 import org.ethereum.core.PendingState;
 import org.ethereum.core.Transaction;
 import org.ethereum.db.ByteArrayWrapper;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.facade.Ethereum;
 import org.ethereum.net.message.ReasonCode;
 import org.ethereum.net.rlpx.Node;
@@ -251,6 +252,12 @@ public class ChannelManager {
             if (channel != receivedFrom) {
                 channel.sendTransactionsCapped(txs);
             }
+        }
+    }
+
+    public void sendCandidateMsg(CandidateMsg candidateMsg){
+        for (Channel channel : activePeers.values()) {
+                channel.sendCandidateMsg(candidateMsg);
         }
     }
 

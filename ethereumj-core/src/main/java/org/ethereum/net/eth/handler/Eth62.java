@@ -24,6 +24,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.ethereum.config.SystemProperties;
 import org.ethereum.core.*;
 import org.ethereum.db.BlockStore;
+import org.ethereum.dpos.BPController;
+import org.ethereum.dpos.CandidateMsg;
 import org.ethereum.listener.CompositeEthereumListener;
 import org.ethereum.net.eth.EthVersion;
 import org.ethereum.net.eth.message.*;
@@ -117,6 +119,13 @@ public class Eth62 extends EthHandler {
 
     private static final EthVersion version = V62;
 
+    private static BPController bpController;
+
+    public static void setBPController(BPController controller){
+         bpController = controller;
+    }
+
+
     public Eth62() {
         this(version);
     }
@@ -165,8 +174,12 @@ public class Eth62 extends EthHandler {
                 processBlockBodies((BlockBodiesMessage) msg);
                 break;
             case NEW_BLOCK:
-                processNewBlock((NewBlockMessage) msg);
+              //  processNewBlock((NewBlockMessage) msg);
+                NewBlockMessage bm=(NewBlockMessage) msg;
+                bpController.onReceiveBlock(bm.getBlock());
                 break;
+            case CANDIDATE_MSG:
+                bpController.onReceiveCandidateMsg((CandidateMsg)msg);
             default:
                 break;
         }
@@ -217,6 +230,11 @@ public class Eth62 extends EthHandler {
     public synchronized void sendTransaction(List<Transaction> txs) {
         TransactionsMessage msg = new TransactionsMessage(txs);
         sendMessage(msg);
+    }
+
+    @Override
+    public synchronized void sendCandidateMsg(CandidateMsg candidateMsg) {
+        sendMessage(candidateMsg);
     }
 
     @Override
